@@ -1,0 +1,6 @@
+"","Leased.Facility.Inventory.Report","X","X.1","X.2","X.3","X.4","X.5","X.6","X.7","X.8","X.9","X.10","X.11","X.12","X.13","X.14","X.15","X.16","X.17","X.18","X.19","X.20","X.21","X.22","X.23","X.24","X.25","X.26","X.27","X.28","X.29"
+"1","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""
+"2","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""
+"3","District","PO Name","Unit Name","Property ID","Property Address","City","ST","ZIP Code","Occupied","Maint","Eff Date","Exp Date","Bldg Own","Land Own","Tax Clause","Purchase Option","LO Nbr","LO Years","Lessor Name","Lessor Address1","Lessor Address2","Lessor Address3","Lessor City","Lessor St","Lessor ZIP","Int Sq Ft","Site Sq Ft","Annual Rent","Annual Rent / Sq Ft","Next Rent","Next Rent / Sq Ft"
+"4","Honolulu","ROTA","MAIN OFFICE","583500002","1 SONG SONG VLG","ROTA","MP","96951-9997","Aug-89","USPS","8/1/2014","7/31/2019","A","A","Reimbursable","","","","JOAQUIN Q ATALIG","PO BOX 965","","","ROTA","MP","969510965","1,602","7,000","$23,900.00 ","$14.92 ","$0.00 ","$0.00 "
+"5","Honolulu","SAIPAN","MAIN OFFICE SITE","584000002","BEACH RD & CHALAN KANOA","SAIPAN","MP","96950-9998","","USPS","7/9/1997","7/8/2022","Q","O","None Specified","N","1","10","","","","","","","","0","50,567","$1.00 ","$0.00 ","$0.00 ","$0.00 "
