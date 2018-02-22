@@ -2,8 +2,11 @@ rm(list = ls())
 library(readxl)
 library(dplyr)
 library(ggplot2)
+library("RColorBrewer")
 
-accident<-as.data.frame(read_excel("G:\\2803\\CI17.xlsx", sheet="accidents"))
+driv<-"C:\\Users\\Administrator\\Documents\\data\\CI17.xlsx"
+
+accident<-as.data.frame(read_excel(driv, sheet="accidents"))
 
 ######## EXAMPLE 
 # https://statkclee.github.io/R-ecology-lesson/05-visualization-ggplot2.html
@@ -72,11 +75,27 @@ ggplot(data=accidents[13:nrow(accidents),], aes(x=year, y=total, fill=year)) +
 		axis.title.y = element_blank()) + 
 	theme(legend.position="none") 
 
+brewer.pal(12, "Paired")
 
 
-ggplot(data=accidents[13:16,]) +
-	geom_bar(stat="identity", aes(x=year, y=total, fill=year)  )   +
-          geom_line(aes(x=1:4,y=accidents[13:16,2] ))
+
+acd<-accidents[5:12,];acd[,1]<-as.character(acd[,1])
+acd[which(acd$type=="MVAs"),1]<-"Motor Vehicle Accidents"
+acd[,1]<-as.factor(acd[,1])
+
+ggplot(acd, aes(x= year,y=total, fill = type) ) + 
+	geom_bar(stat = "identity" ) + 	theme_minimal()   +	
+	theme(legend.position="bottom",legend.title = element_blank()) +
+  	scale_fill_brewer(palette="Paired") + 
+	theme(axis.title.x = element_blank(),axis.title.y = element_blank())
+
+ggplot(acd) + 
+	geom_bar(stat = "identity" ,aes(x= year,y=total, fill = type) ) + 	
+	theme_minimal()   +	
+	theme(legend.position="bottom",legend.title = element_blank()) +
+	scale_fill_manual(values = c(brewer.pal(12, "Paired")[3],
+	brewer.pal(12, "Paired")[1]))	+	
+	theme(axis.title.x = element_blank(),axis.title.y = element_blank())
 
 ##########################################
 ##########################################
