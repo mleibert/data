@@ -3,7 +3,8 @@ library(readxl)
 library(dplyr)
 library(ggplot2)
 library("RColorBrewer")
-
+library(extrafont)
+ 
 driv<-"C:\\Users\\Administrator\\Documents\\data\\CI17.xlsx"
 
 accident<-as.data.frame(read_excel(driv, sheet="accidents"))
@@ -89,18 +90,37 @@ ggplot(acd, aes(x= year,y=total, fill = type) ) +
   	scale_fill_brewer(palette="Paired") + 
 	theme(axis.title.x = element_blank(),axis.title.y = element_blank())
 
-ggplot(acd) + 
+
+acd$comma<-prettyNum(acd$total,big.mark=",")
+
+font_import()
+loadfonts(device = "win")
+
+
+p<-ggplot(acd) + 
 	geom_bar(stat = "identity" ,aes(x= year,y=total, fill = type) ) + 	
 	theme_minimal()   +	
 	theme(legend.position="bottom",legend.title = element_blank()) +
 	scale_fill_manual(values = c(brewer.pal(12, "Paired")[3],
-	brewer.pal(12, "Paired")[1]))	+	
-	theme(axis.title.x = element_blank(),axis.title.y = element_blank())
+		brewer.pal(12, "Paired")[1]))	+	
+	theme(axis.title.x = element_blank(),axis.title.y = element_blank()) +
+	geom_text(aes(x= year,y=total,label = comma  ), color="white",
+		size=3,position = position_stack(vjust = 0.5)) +
+  	theme(text=element_text(size=10,  family="Calibri")) + 
+	scale_y_continuous(labels = scales::comma) + 
+	scale_x_discrete( labels= paste0("FY ",2014:2017)) 
+
+
+dev.new(width=5.5, height=4)
+p
+
 
 ##########################################
 ##########################################
 
 top2<-as.data.frame(read_excel("G:\\2803\\CI17.xlsx", sheet="top2"))
+top2<-as.data.frame(read_excel(driv, sheet="top2"))
+
 top2<-top2[c(4:6,1:3),]
 
 
@@ -112,19 +132,32 @@ top2<-top2[c(4:6,1:3),]
 #  theme_minimal()+ scale_x_discrete(labels= SoilSciGuylabs)
 
 
- 
+top2$comma<-prettyNum(top2$count,big.mark=",")
 
-ggplot(data=top2, aes(x=year, y=count, fill=year)) +
+p<-ggplot(data=top2, aes(x=year, y=count, fill=year)) +
 	geom_bar(stat="identity", position=position_dodge() ) +
 	facet_wrap(~ sideswipe) + theme(legend.position="none") +
 	scale_fill_brewer(palette="Paired") + 
-	geom_text(aes(label=count), vjust=1.6, color="white",
-		position = position_dodge(0.9), size=3.5)+
+	geom_text(aes(label=comma), vjust=1.6, color="white",
+		position = position_dodge(0.9), size=3)+
 	theme_minimal()+
-	theme(axis.title.x=element_blank() ,axis.title.y=element_blank()  )+ 
-	labs(title = "Collision / Sideswipe", subtitle=" ")+
+	theme(axis.title.y=element_blank()  )+ 
+	labs(title = " ", subtitle=" ") +
 	theme(plot.title = element_text(hjust = 0.5))+ 
-	theme(legend.position="none")   
+	theme(legend.position="none")   + 
+	scale_y_continuous(labels = scales::comma) + 
+	scale_x_discrete( labels= paste0("FY ",2014:2017), name="") +
+  	theme(text=element_text(size=10,  family="Calibri"))
 
 
+
+dev.new(width=6.5, height=4)
+p
  
+
+##########################################
+##########################################
+
+
+
+
