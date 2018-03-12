@@ -8,8 +8,11 @@ require("ggthemes")
 library(ggalt)
 library(mapproj)
 
-ADZ<-read.csv("G:/viz/realdist.csv")
-shapefile <- readOGR("G:/zip3", "zip3")
+#ADZ<-read.csv("G:/viz/realdist.csv")
+ADZ<-read.csv("G:/2803/data/realdist.csv")
+
+
+shapefile <- readOGR("G:/2803/data", "zip3")
 ADZ$zip<-sprintf("%03d", ADZ[,ncol(ADZ)])
 
 shapefile@data

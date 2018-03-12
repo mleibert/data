@@ -1,11 +1,12 @@
 rm(list = ls())
 library(readxl)
- 
+ library(ggthemes)
+ setwd("G:\\2803\\data")
 
-source("G:\\viz\\DistrictBorders.R")
+source("G:\\2803\\data\\DistrictBorders.R")
 head(ADZ)
 
-CI<-as.data.frame(read_excel("G:\\2803\\CI17.xlsx", sheet="district"))
+CI<-as.data.frame(read_excel("G:\\2803\\data\\CI17.xlsx", sheet="district"))
 CI$color<-NA
 
 for( i in 1:6){	 CI[which( CI$Rank >= seq(0,65,10)[i] &
@@ -22,7 +23,7 @@ CI[which(CI$Rank >= 60),ncol(CI)]<-7
 ################################################################
 
 
-shapefile <- readOGR("G:/zip3", "zip3")
+shapefile <- readOGR("G:\\2803\\data", "zip3")
 sdf<-fortify(shapefile)
 
 
@@ -101,19 +102,36 @@ head(CI)
 colorz<-c('#A91101', '#f46d43','#fdae61' ,'#e6f598',
 	'#abdda4','#66c2a5','#4CBB17')
 
+
+colorz<-c('#A91101', '#f46d43','#fdae61' ,'#e6f598',
+	'#abdda4','#4CBB17','#228B22')
+
 colorz<-rev(colorz)
 length(colorz)
 
-titlez<-"Rank by District"
 namez<-c("1-10","11-20","21-30","31-40","41-50","51-60","60-67")
 legendz<-"Rank" 
 
 
 CImap<-ggplot() + geom_polygon(data = sdf, aes(x=long, y = lat, group = group ,
-	fill = as.factor(bin)) ) + theme_void() + 
-	 scale_fill_manual(values =colorz ,labels=  namez )  
+	fill = as.factor(bin)) ) + theme_void()  
 
  
+CImap  + geom_polygon(data = bdf, 
+            aes(x=long, y=lat, group = group) ,  colour = "#000000", 
+            fill = NA, size = .2)  + 
+		geom_polygon(data = bdf, 
+            aes(x=long, y=lat, group = group) ,  colour = "gray", 
+            fill = NA, size = .2)  + 
+		guides(fill =  guide_legend(title= legendz )) +
+ 		 theme(plot.title = element_text( hjust = 0.5 , vjust=-3,
+			color="#67a9cf", face="bold", size=14)	) + 
+		  coord_map()+ 
+		 scale_fill_manual(values =colorz ,labels=  namez ) 
+
+ CImap  + scale_fill_brewer(palette = "RdYlGn")
+
+
 CImap  + geom_polygon(data = bdf, 
             aes(x=long, y=lat, group = group) ,  colour = "#000000", 
             fill = NA, size = .2)  + 
@@ -124,10 +142,7 @@ CImap  + geom_polygon(data = bdf,
 			labs(title=titlez   ) +
  		 theme(plot.title = element_text( hjust = 0.5 , vjust=-3,
 			color="#67a9cf", face="bold", size=14)	) + 
-		  coord_map()
+		  coord_map()+ 
+		scale_fill_brewer(palette = "RdYlGn",direction = -1)
 
-
- +
-  		  theme(legend.position="bottom")
-	
-
+ 
